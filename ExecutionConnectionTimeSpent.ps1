@@ -9,7 +9,7 @@ param($server = "", #ServerName parameter to connect,for example, myserver.datab
       $Folder = "C:\PerfConn", #Folder Parameter to save the log and solution files, for example, c:\PerfConn
       $PoolingQuestion = "Y",
       $NumberExecutionsQ ="100", 
-      $File = "c:\PerfConn\TSQL.SQL")
+      $File = "C:\PerfConn\TSQL.SQL")
       
 
 #----------------------------------------------------------------
@@ -211,6 +211,27 @@ try
  }
 }
 
+#--------------------------------
+#Obtain the Performance counters.
+#--------------------------------
+function PerfCounters($CounterPattern)
+{
+try
+ {
+    logMsgPerfCounter( "Obtaining Performance Counters of : " + $CounterPattern )
+    $Counters = Get-Counter -Counter $CounterPattern 
+    foreach ($Counter in $Counters.CounterSamples)
+    {
+        logMsgPerfCounter( "Counter: " + $Counter.Path + " - " + $Counter.InstanceName + "-" + $Counter.CookedValue )
+    }
+    logMsgPerfCounter( "Obtained Performance Counters of : " + $CounterPattern )
+ }
+  catch
+ {
+  logMsgPerfCounter( "Imposible to obtain Performance Counters of : " + $CounterPattern + "- Error: " + $Error[0].Exception) (2)
+  return ""
+ }
+}
 
 #--------------------------------------------------------------
 #Create a folder 
@@ -304,6 +325,50 @@ function logMsg
 }
 
 #--------------------------------
+#Log the operations
+#--------------------------------
+function logMsgPerfCounter
+{
+    Param
+    (
+         [Parameter(Mandatory=$true, Position=0)]
+         [string] $msg,
+         [Parameter(Mandatory=$false, Position=1)]
+         [int] $Color
+    )
+  try
+   {
+    $Fecha = Get-Date -format "yyyy-MM-dd HH:mm:ss"
+    $msg = $Fecha + " " + $msg
+    Write-Output $msg | Out-File -FilePath $LogFileCounter -Append
+    $Colores="White"
+    $BackGround = 
+    If($Color -eq 1 )
+     {
+      $Colores ="Cyan"
+     }
+    If($Color -eq 3 )
+     {
+      $Colores ="Yellow"
+     }
+
+     if($Color -eq 2)
+      {
+        Write-Host -ForegroundColor White -BackgroundColor Red $msg 
+      } 
+     else 
+      {
+        Write-Host -ForegroundColor $Colores $msg 
+      } 
+
+
+   }
+  catch
+  {
+    Write-Host $msg 
+  }
+}
+#--------------------------------
 #The Folder Include "\" or not???
 #--------------------------------
 
@@ -388,6 +453,7 @@ try
 {
  cls
  $Pooling=$true
+ $NumberExecutions=0
  
 Class IPReference #Class to manage the IP address changes
 {
@@ -486,11 +552,13 @@ logMsg("Created the folder " + $Folder) (1)
 
 $sFolderV = GiveMeFolderName($Folder) #Creating a correct folder adding at the end \.
 
-$LogFile = $sFolderV + "Results.Log"                  #Logging the operations.
+$LogFile = $sFolderV + "Results.Log"                     #Logging the operations.
+$LogFileCounter = $sFolderV + "Results_PerfCounter.Log"  #Logging the data of performance counter
 
-logMsg("Deleting Log") (1)
-   $result = DeleteFile($LogFile) #Delete Log file
-logMsg("Deleted Log") (1)
+logMsg("Deleting Logs") (1)
+   $result = DeleteFile($LogFile)        #Delete Log file
+   $result = DeleteFile($LogFileCounter) #Delete Log file
+logMsg("Deleted Logs") (1)
 
 LogMsg("Number of times " + $NumberExecutions.ToString()) 
 
@@ -524,6 +592,10 @@ $ExistFile= Test-Path $File
            }
            ExecuteQuery $SQLConnectionSource $query[$iQuery]
            Ports $IPControlPort $IPControlPortProcess
+           PerfCounters "\processor(_total)\*"
+           PerfCounters "\Memory\*"
+           PerfCounters "\Network Interface(*)\*"
+           PerfCounters "\Network Adapter(*)\*"
            $SQLConnectionSource.Close()
          }
        catch
