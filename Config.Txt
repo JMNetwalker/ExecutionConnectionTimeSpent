@@ -1,0 +1,80 @@
+//--------------------------------- Miscelaneus
+// NumberExecutions=Number of executions
+// ShowPorts=Show the ports that we have opened. Valid values (Y)es or (N)o
+// ShowPortsDetails=Show the ports opened per process. Valid values (Y)es or (N)o
+// WaitTimeBetweenConnections=Add in seconds a delay for every connection
+// ShowWhatHappenedMsgAtTheEnd=Show a message at the end of the script. Valid values (Y)es or (N)o
+------------------------------------------------
+
+NumberExecutions=1400
+ShowPorts=N
+ShowPortsDetails=N
+WaitTimeBetweenConnections=0
+ShowWhatHappenedMsgAtTheEnd=Y
+
+//--------------------------------- Connectivity 
+// CloseConnections=Close the connection or not. Valid values (Y)es or (N)o
+// Port=Port to connect 
+// Protocol=Protocol to connect
+// server=server name
+// Db=Database Name to connect 
+// ApplicationName=Name of the application
+// MultipleActiveResultSets=Use Mars. Valid values True or False
+// Max Pool Size=5000
+// Min Pool Size=1
+// RetryLogicNumberAttempts=Number of attempts to connect 
+// RetryLogicNumberAttemptsBetweenAttemps=Seconds between attempts
+// ConnectionTimeout=10
+// Pooling=True. Valid values True or False 
+// Packet Size=-1 Packet Size -1 = driver default.
+// ConnectRetryCount=3
+// ConnectRetryInterval=10	  
+// ShowConnectionMessage=Show messages about connectivity events. Valid values (Y)es or (N)o
+// ShowIPChangedMessage= Show if the IP of the server has been changed. Valid values (Y)es or (N)o
+// ShowIPResolution=Show the IP resolution. Valid values (Y)es or (N)o
+// ShowIPPortTest=Check if the IP and port is listening. Valid values (Y)es or (N)o
+// ClearAllPools=clear all the pool en case of error. Valid values (Y)es or (N)o
+// ShowPortConnection= Show the port connection. Valid values (Y)es or (N)o 
+//--------------------------------------------------------------------
+CloseConnections=Y
+Port=1433
+Protocol=TCP:
+server=servername.database.windows.net
+Db=mydatabase
+ApplicationName=Test Connectivity - Execution Time Application
+MultipleActiveResultSets=false
+Max Pool Size=5000
+Min Pool Size=1
+RetryLogicNumberAttempts=1
+RetryLogicNumberAttemptsBetweenAttemps=5
+ConnectionTimeout=10
+Pooling=True
+Packet Size=-1
+ConnectRetryCount=3
+ConnectRetryInterval=10	  
+ShowConnectionMessage=Y
+ShowIPChangedMessage=N
+ShowIPResolution=N
+ShowIPPortTest=N
+ClearAllPools=N
+ShowPortConnection=N
+
+//--------------------------------- Execution Command 
+// CommandTimeout=Command timeout in seconds 
+// CommandTimeoutFactor=Factor to add in terms of error (in seconds).
+// CommandExecutionRetries= Number of execution retries
+// CommandExecutionRetriesWaitTime= Time to wait between retries 
+// CommandTimeout=3600 
+// ShowCounters=Show the counters in terms time execution. Valid values (Y)es or (N)o
+// ShowExecutedQuery= Show the text of the query that is executing. Valid values (Y)es or (N)o
+// ShowXMLPlan= Show the XML Plan of the query. Valid values (Y)es or (N)o
+//--------------------------------------------------------
+
+CommandTimeout=50
+CommandTimeoutFactor=10
+CommandExecutionRetries=3
+CommandExecutionRetriesWaitTime=2
+CommandTimeout=3600
+ShowCounters=N
+ShowExecutedQuery=N
+ShowXMLPlan=N
