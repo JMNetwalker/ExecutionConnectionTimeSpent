@@ -24,14 +24,11 @@ Basically we need to configure the parameters:
 
 ## Connectivity
 
-- **$server** = "xxxxx.database.windows.net" // Azure SQL Server name
-- **$user** = "xxxxxx" // User Name
-- **$passwordSecure** = "xxxxxx" // Password
-- **$Db** = "xxxxxx"      // Database Name
-- **$Folder** = "C:\PerfConn" // Folder where the log file will be generated with all the issues found.
-- **$PoolingQuestion** = If you want to use pooling in your connection
-- **NumberOfExecution** = How many executions that you want to execute
-- **$File** = That contains the TSQL file with the queries that will be executed. If the file doesn't exists or is not accesible, by default, the query to execute will be SELECT 1. See the TSQL file in this github to obtain more information.
+Today, 26 July 2022 we released a new version:
+
+- **We replaced all the parameters** adding a **Config.Txt** and adding around 20 new parameters. 
+- **We included a Secrets.Txt** for user and password and 
+- **TSQL.SQL** = That contains the TSQL file with the queries that will be executed. If the file doesn't exists or is not accesible, by default, the query to execute will be SELECT 1. See the TSQL file in this github to obtain more information.
 
 ## Outcome
 
