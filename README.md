@@ -8,6 +8,11 @@ We usually work on service request that our customers want to check the spent ti
 - **How the server name is resolved.** Sometimes we could have some issues resolving the IP. 
 - **Number of ports opened using** the remote port 1433 and redirect ports of Azure SQL DB and Managed Instance. 
 - **By Process how to know ports** opened using the remote port 1433 and redirect ports
+- **Performance counter values of:**
+  + "\Processor(_total)\*"
+  + "\Memory\*"
+  + "\Network Interface(*)\*"
+  + "\Network Adapter(*)\*"
 - **Based on this URL:**
   + **NetworkServerTime (ms)**, that returns the cumulative amount of time (in milliseconds) that the provider spent waiting for replies from the server once the application has started using the provider and has enabled statistics.
   + **Execution Time (ms)** , that Returns the cumulative amount of time (in milliseconds) that the provider has spent processing once statistics have been enabled, including the time spent waiting for replies from the server as well as the time spent executing code in the provider itself.
@@ -31,5 +36,6 @@ Basically we need to configure the parameters:
 ## Outcome
 
 - **Results.Log** = Contains all the operations and results found, including the time and execution plan in XML.
+- **Results_PerfCounter.Log** = Cotains all the performance counters values chosen.
 
 Enjoy!
